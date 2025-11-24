@@ -1,17 +1,41 @@
-ruta = 'tareas.txt'
+from crear_archivo import ruta
 
 def update_task():
-    with open(ruta, 'r') as archivo:
-        tareas = archivo.readlines()
+    try:
+        with open(ruta, 'r') as archivo:
+            tareas = archivo.readlines()
 
-        tarea_modificar = int(input("Indique la tarea a modificar:"))
+        if not tareas:
+            print("\n---------------------------")
+            print("No hay tareas para modificar.")
+            print("---------------------------\n")
+            return
+
+        tarea_modificar = int(input("\nIndique el número de la tarea a modificar: "))
         print("======================================================")
-        tarea_nueva = input("Ingrese la tarea nueva:")
 
-        tareas[tarea_modificar - 1] = tarea_nueva, "\n"
+        # Validar rango
+        if tarea_modificar < 1 or tarea_modificar > len(tareas):
+            print("\n---------------------------")
+            print("Número de tarea inválido.")
+            print("---------------------------\n")
+            return
 
-    with open(ruta, 'w') as archivo:
-        archivo.writelines(tarea_nueva)
-    print("\n---------------------------")
-    print("Tarea Actualizada.")
-    print("---------------------------\n")
+        tarea_nueva = input("Ingrese la nueva tarea: ")
+
+        # Modificar correctamente la línea
+        tareas[tarea_modificar - 1] = tarea_nueva + "\n"
+
+        # Guardar cambios
+        with open(ruta, 'w') as archivo:
+            archivo.writelines(tareas)
+
+        print("\n---------------------------")
+        print("Tarea Actualizada.")
+        print("---------------------------\n")
+
+    except ValueError:
+        print("\nDebes escribir un número válido.\n")
+
+    except Exception as e:
+        print(f"\nOcurrió un error inesperado: {e}\n")
