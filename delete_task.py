@@ -1,17 +1,18 @@
-ruta = 'tareas.txt'
+from crear_archivo import ruta
 
 def delete_task():
-    with open(ruta, 'r') as archivo:
-        tareas = archivo.readlines()
+    try:
+        with open(ruta, 'r') as archivo:
+            tareas = archivo.readlines()
 
-        tarea_eliminar = int(input("Indique la tarea a eliminar:"))
-        tareas.pop(tarea_eliminar - 1)
+            tarea_eliminar = int(input("Indique la tarea a eliminar:"))
+            tareas.pop(tarea_eliminar - 1)
 
-    with open(ruta, 'w') as archivo:
-        archivo.writelines(tareas)
+        with open(ruta, 'w') as archivo:
+            archivo.writelines(tareas)
 
-    print("\n---------------------------")
-    print("Tarea Eliminada.")
-    print("---------------------------\n")
-
-delete_task()
+        print("\n---------------------------")
+        print("Tarea Eliminada.")
+        print("---------------------------\n")
+    except IndexError:
+        print("Tarea no encontrada, Verifique el id de su tarea oh confirme si la lista no este vacia.")
